@@ -1,4 +1,5 @@
 import statistics
+import numpy as np
 
 
 def get_all_median_price(all_price, pair):
@@ -25,9 +26,28 @@ def get_median_price(price_list, symbol, pair):
             'error': True
         }
 
+    # remove outliner
+    price_list = remove_outlier(price_list)
+
     # return median price
     return {
             'price': round(statistics.median(price_list), 4),
             'pair': pair,
             'error': False
         }
+
+def remove_outlier(price_list):
+    # Set upper and lower limit to 3 standard deviation
+    price_std = np.std(price_list)
+    price_mean = np.mean(price_list)
+    price_cut_off = price_std * 3
+    lower_limit  = price_mean - price_cut_off 
+    upper_limit = price_mean + price_cut_off
+
+    # add price that is not outlier to result
+    result = []
+    for x in price_list:
+        if lower_limit < x < upper_limit:
+            result.append(x)
+    
+    return result
