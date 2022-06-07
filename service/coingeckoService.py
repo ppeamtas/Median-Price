@@ -25,7 +25,7 @@ def get_coingecko_price(symbols, pair):
                 response =  response.json()
 
                 # good response from price api, add price into result
-                if pair in response[id]:
+                if pair.lower() in response[id]:
                     result[symbol] = {
                         'price': round(float(response[id][pair.lower()]), 4),
                         'pair': pair,
