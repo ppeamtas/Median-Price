@@ -13,10 +13,19 @@ router = APIRouter()
 
 
 def validate_parameter(symbols):
-    # chack symbols starting with '[' and ending with ']'
+    # check symbols is not empty string
+    if not symbols:
+        return {'message': 'symbols can not be empty', 'error': True}, True
+
+    # check symbols starting with '[' and ending with ']'
     if symbols[0] != '[' or symbols[-1] != ']':
         return {'message': 'invalid parameter symbols', 'error': True}, True
-    
+
+    symbols = symbols.strip()[1:-1]
+    # check symbols is not empty list
+    if not symbols:
+        return {'message': 'symbols can not be empty', 'error': True}, True
+
     # change string parameter to list
     validated_parameter = [e.upper() for e in symbols.strip()[1:-1].split(',')]
     return validated_parameter, False
@@ -39,7 +48,7 @@ def get_all_api_price(symbols_list, pair):
 
 
 @router.get("/all_price")
-async def get_all_price(symbols=[], pair='usdt'):
+async def get_all_price(symbols, pair='usdt'):
     validated_parameter, error = validate_parameter(symbols)
     if error:
         return JSONResponse(content=validated_parameter, status_code=400)
@@ -48,7 +57,7 @@ async def get_all_price(symbols=[], pair='usdt'):
 
 
 @router.get("/median_price")
-async def get_median_price(symbols=[], pair='usdt'):
+async def get_median_price(symbols, pair='usdt'):
     validated_parameter, error = validate_parameter(symbols)
     if error:
         return JSONResponse(content=validated_parameter, status_code=400)
@@ -69,7 +78,7 @@ async def get_median_price(symbols=[], pair='usdt'):
     
 
 @router.get("/binance_price")
-async def binance_price(symbols=[], pair='usdt'):
+async def binance_price(symbols, pair='usdt'):
     validated_parameter, error = validate_parameter(symbols)
     if error:
         return JSONResponse(content=validated_parameter, status_code=400)
@@ -78,7 +87,7 @@ async def binance_price(symbols=[], pair='usdt'):
 
 
 @router.get("/coinmarketcap_price")
-async def coinmarketcap_price(symbols=[], pair='usdt'):
+async def coinmarketcap_price(symbols, pair='usdt'):
     validated_parameter, error = validate_parameter(symbols)
     if error:
         return JSONResponse(content=validated_parameter, status_code=400)
@@ -87,7 +96,7 @@ async def coinmarketcap_price(symbols=[], pair='usdt'):
 
 
 @router.get("/okx_price")
-async def okx_price(symbols=[], pair ='usdt'):
+async def okx_price(symbols, pair ='usdt'):
     validated_parameter, error = validate_parameter(symbols)
     if error:
         return JSONResponse(content=validated_parameter, status_code=400)
@@ -96,7 +105,7 @@ async def okx_price(symbols=[], pair ='usdt'):
 
 
 @router.get("/kraken_price")
-async def kraken_price(symbols=[], pair='usdt'):
+async def kraken_price(symbols, pair='usdt'):
     validated_parameter, error = validate_parameter(symbols)
     if error:
         return JSONResponse(content=validated_parameter, status_code=400)
@@ -105,7 +114,7 @@ async def kraken_price(symbols=[], pair='usdt'):
 
 
 @router.get("/coingecko_price")
-async def coingecko_price(symbols=[], pair='usdt'):
+async def coingecko_price(symbols, pair='usdt'):
     validated_parameter, error = validate_parameter(symbols)
     if error:
         return JSONResponse(content=validated_parameter, status_code=400)
