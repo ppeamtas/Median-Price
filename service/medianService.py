@@ -25,7 +25,7 @@ def get_median_price(price_list, symbol, pair):
             'message': f'{symbol}-{pair} pairs has less than 3 sources',
             'error': True
         }
-
+    
     # remove outliner
     price_list = remove_outlier(price_list)
 
@@ -43,6 +43,10 @@ def remove_outlier(price_list):
     price_cut_off = price_std * 3
     lower_limit  = price_mean - price_cut_off 
     upper_limit = price_mean + price_cut_off
+
+    # if std is 0 all price are equal, do not remove any price
+    if price_std == 0:
+        return price_list
 
     # add price that is not outlier to result
     result = []
