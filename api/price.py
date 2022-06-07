@@ -27,7 +27,7 @@ def validate_parameter(symbols):
         return {'message': 'symbols can not be empty', 'error': True}, True
 
     # change string parameter to list
-    validated_parameter = [e.upper() for e in symbols.strip()[1:-1].split(',')]
+    validated_parameter = [e.upper() for e in symbols.split(',')]
     return validated_parameter, False
 
 
