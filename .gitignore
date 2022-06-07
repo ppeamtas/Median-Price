@@ -1,0 +1,8 @@
+# Python cache file
+**/__pycache__
+
+# ENV File
+/.env
+
+# virtualenv
+/env
